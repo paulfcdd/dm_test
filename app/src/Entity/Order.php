@@ -22,12 +22,16 @@ class Order
     /**
      * @var Collection<int, OrderItem>
      */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order')]
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist'])]
     private Collection $items;
+
+    #[ORM\Column]
+    private ?float $amount = null;
 
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -73,6 +77,18 @@ class Order
                 $orderItem->setOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAmount(): ?float
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(float $amount): static
+    {
+        $this->amount = $amount;
 
         return $this;
     }

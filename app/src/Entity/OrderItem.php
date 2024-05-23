@@ -17,7 +17,7 @@ class OrderItem
     #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false)]
     private ?Order $order = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', nullable: false)]
     private ?Product $product = null;
 
