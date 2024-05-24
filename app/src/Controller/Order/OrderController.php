@@ -32,7 +32,6 @@ class OrderController extends AbstractController
             $command = $request->getCommand($orderId);
             $this->handler->handle($command);
 
-
             return $this->getOrder($orderId);
         } catch (\Exception $exception) {
             return $this->json($exception->getMessage(), $exception->getCode());

@@ -41,8 +41,12 @@ class CreateOrderHandler implements CommandHandlerInterface
             $order->addOrderItem($orderItem);
         }
 
+        $orderPrice = $this->calculator->getOrderPrice($order);
+
+        dd($orderPrice);
+
         $order->setAmount(
-            $this->calculator->getOrderPrice($order)->total
+            $this->calculator->getOrderPrice($order)->gross
         );
         $this->orderRepository->save($order);
     }

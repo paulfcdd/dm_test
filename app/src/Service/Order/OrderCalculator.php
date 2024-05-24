@@ -6,22 +6,30 @@ namespace App\Service\Order;
 
 use App\Entity\Order;
 
-class OrderCalculator
+readonly class OrderCalculator
 {
+    public function __construct(
+        private iterable $collectors
+    ) {
+    }
+
     public function getOrderPrice(Order $order): OrderPriceValueObject
     {
         $subtotal = 0.0;
+        $vat = 0.0;
+        $total = 0.0;
 
-        foreach ($order->getItems() as $item) {
-            $itemTotal = $item->getProduct()->getPrice() * $item->getQuantity();
-            $subtotal += $itemTotal;
+        foreach ($this->collectors as $collector) {
+            $collector->collect($order);
+            $subtotal += $collector->getSubtotal();
+            $vat += $collector->getVat();
+            $total += $collector->getTotal();
         }
 
-        $total = round($subtotal, 2);
-
         return new OrderPriceValueObject(
-            $subtotal,
-            $total
+            round($subtotal, 2),
+            round($vat, 2),
+            round($total, 2)
         );
     }
 }

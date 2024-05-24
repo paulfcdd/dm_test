@@ -22,6 +22,18 @@ services:
     App\EventListener\ResponseHeaderListener:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.response', method: 'onKernelResponse' }
+    App\Service\Order\NetPriceCollector:
+        tags: [ 'order.collector' ]
+
+    App\Service\Order\VatCollector:
+        tags: [ 'order.collector' ]
+
+    App\Service\Order\GrossPriceCollector:
+        tags: [ 'order.collector' ]
+
+    App\Service\Order\OrderCalculator:
+        arguments:
+            $collectors: !tagged order.collector
 #    _instanceof:
 #        App\Command\CommandHandlerInterface:
 #            tags:

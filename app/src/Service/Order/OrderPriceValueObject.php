@@ -7,8 +7,9 @@ namespace App\Service\Order;
 readonly class OrderPriceValueObject
 {
     public function __construct(
-        public float $subtotal,
-        public float $total
+        public float $net,
+        public float $vat,
+        public float $gross
     ) {
     }
 }
