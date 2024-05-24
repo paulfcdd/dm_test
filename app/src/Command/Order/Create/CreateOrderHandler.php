@@ -6,13 +6,11 @@ namespace App\Command\Order\Create;
 
 use App\Command\CommandHandlerInterface;
 use App\Command\CommandInterface;
-use App\Dto\CreateOrderDto;
-use App\Dto\CreateOrderItemDto;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
-use App\Service\Order\OrderCalculator;
+use App\Service\Order\PriceCalculator\OrderCalculator;
 
 class CreateOrderHandler implements CommandHandlerInterface
 {
