@@ -27,7 +27,7 @@ class CreateOrderHandler implements CommandHandlerInterface
     {
         $orderDto = $command->orderDto;
         $order = new Order();
-
+        $order->setId($command->orderId->value());
         foreach ($orderDto->items as $item) {
             $product = $this->productRepository->find($item->productId);
             if ($product === null) {

@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Order\Create;
+namespace App\Controller\Order\Create\Request;
 
 use App\Command\Order\Create\CreateOrderCommand;
 use App\Dto\CreateOrderDto;
 use App\Dto\CreateOrderItemDto;
+use App\Entity\OrderId;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateOrderRequest
@@ -17,7 +18,9 @@ class CreateOrderRequest
     ) {
     }
 
-    public function getCommand(): CreateOrderCommand
+    public function getCommand(
+        OrderId $orderId
+    ): CreateOrderCommand
     {
         $itemsDto = [];
 
@@ -30,6 +33,7 @@ class CreateOrderRequest
         }
 
         return new CreateOrderCommand(
+            $orderId,
             new CreateOrderDto($itemsDto)
         );
     }

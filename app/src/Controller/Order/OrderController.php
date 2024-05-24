@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Controller\Order;
 
 use App\Command\CommandHandlerInterface;
-use App\Controller\Order\Create\CreateOrderRequest;
+use App\Controller\Order\Create\Request\CreateOrderRequest;
+use App\Entity\OrderId;
 use App\Query\Order\GetOrder\GetOrderQuery;
 use App\Query\QueryDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 
 class OrderController extends AbstractController
 {
@@ -25,11 +27,13 @@ class OrderController extends AbstractController
     public function createOrder(
         #[MapRequestPayload] CreateOrderRequest $request
     ): JsonResponse {
-        $command = $request->getCommand();
-
         try {
+            $orderId = OrderId::generate();
+            $command = $request->getCommand($orderId);
             $this->handler->handle($command);
-            return $this->json('Order created');
+
+
+            return $this->getOrder($orderId);
         } catch (\Exception $exception) {
             return $this->json($exception->getMessage(), $exception->getCode());
         }
@@ -37,7 +41,7 @@ class OrderController extends AbstractController
 
     #[Route('/api/order/{id}', name: 'api.order.read', methods: ['GET'])]
     public function getOrder(
-        int $id
+        OrderId $id
     ): JsonResponse {
         $query = new GetOrderQuery($id);
         $result = $this->dispatcher->dispatch($query);

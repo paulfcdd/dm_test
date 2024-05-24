@@ -141,6 +141,8 @@
       <path value="$PROJECT_DIR$/app/vendor/symfony/dom-crawler" />
       <path value="$PROJECT_DIR$/app/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/uid" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

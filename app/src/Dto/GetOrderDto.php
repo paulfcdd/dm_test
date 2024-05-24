@@ -10,7 +10,7 @@ class GetOrderDto
      * @param GetOrderItemDto[] $items
      */
     public function __construct(
-        public int $id,
+        public string $id,
         public \DateTimeImmutable $createdAt,
         public array $items,
         public float $totalAmount
