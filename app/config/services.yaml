@@ -19,6 +19,9 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\EventListener\ResponseHeaderListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.response', method: 'onKernelResponse' }
 #    _instanceof:
 #        App\Command\CommandHandlerInterface:
 #            tags:
