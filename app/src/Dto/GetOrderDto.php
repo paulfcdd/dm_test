@@ -13,7 +13,9 @@ class GetOrderDto
         public string $id,
         public \DateTimeImmutable $createdAt,
         public array $items,
-        public float $totalAmount
+        public float $grossPrice,
+        public float $netPrice,
+        public float $vat
     ) {
     }
 }

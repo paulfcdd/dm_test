@@ -43,11 +43,10 @@ class CreateOrderHandler implements CommandHandlerInterface
 
         $orderPrice = $this->calculator->getOrderPrice($order);
 
-        dd($orderPrice);
+        $order->setGrossPrice($orderPrice->gross);
+        $order->setNetPrice($orderPrice->net);
+        $order->setVat($orderPrice->vat);
 
-        $order->setAmount(
-            $this->calculator->getOrderPrice($order)->gross
-        );
         $this->orderRepository->save($order);
     }
 }

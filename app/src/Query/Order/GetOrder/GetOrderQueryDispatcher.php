@@ -38,13 +38,14 @@ class GetOrderQueryDispatcher implements QueryDispatcherInterface
                 $totalPrice
             );
         }
-        $totalAmount = $order->getAmount();
 
         return new GetOrderDto(
             $order->getId(),
             $order->getCreatedAt(),
             $orderItemsDto,
-            $totalAmount
+            $order->getGrossPrice(),
+            $order->getNetPrice(),
+            $order->getVat()
         );
     }
 }

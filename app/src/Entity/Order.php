@@ -26,7 +26,13 @@ class Order
     private Collection $items;
 
     #[ORM\Column]
-    private ?float $amount = null;
+    private ?float $grossPrice = null;
+
+    #[ORM\Column]
+    private ?float $netPrice = null;
+
+    #[ORM\Column]
+    private ?float $vat = null;
 
     public function __construct()
     {
@@ -88,14 +94,38 @@ class Order
         return $this;
     }
 
-    public function getAmount(): ?float
+    public function getGrossPrice(): ?float
     {
-        return $this->amount;
+        return $this->grossPrice;
     }
 
-    public function setAmount(float $amount): static
+    public function setGrossPrice(float $grossPrice): static
     {
-        $this->amount = $amount;
+        $this->grossPrice = $grossPrice;
+
+        return $this;
+    }
+
+    public function getNetPrice(): ?float
+    {
+        return $this->netPrice;
+    }
+
+    public function setNetPrice(float $netPrice): static
+    {
+        $this->netPrice = $netPrice;
+
+        return $this;
+    }
+
+    public function getVat(): ?float
+    {
+        return $this->vat;
+    }
+
+    public function setVat(float $vat): static
+    {
+        $this->vat = $vat;
 
         return $this;
     }
