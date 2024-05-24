@@ -22,16 +22,16 @@ services:
     App\EventListener\ResponseHeaderListener:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.response', method: 'onKernelResponse' }
-    App\Service\Order\NetPriceCollector:
+    App\Service\Order\PriceCalculator\NetPriceCollector:
         tags: [ 'order.collector' ]
 
-    App\Service\Order\VatCollector:
+    App\Service\Order\PriceCalculator\VatCollector:
         tags: [ 'order.collector' ]
 
-    App\Service\Order\GrossPriceCollector:
+    App\Service\Order\PriceCalculator\GrossPriceCollector:
         tags: [ 'order.collector' ]
 
-    App\Service\Order\OrderCalculator:
+    App\Service\Order\PriceCalculator\OrderCalculator:
         arguments:
             $collectors: !tagged order.collector
 #    _instanceof:
