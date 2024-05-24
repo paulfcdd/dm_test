@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Order\Create;
 
 use App\Command\Order\Create\CreateOrderCommand;
-use App\Dto\OrderDto;
-use App\Dto\OrderItemDto;
+use App\Dto\CreateOrderDto;
+use App\Dto\CreateOrderItemDto;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateOrderRequest
@@ -22,7 +22,7 @@ class CreateOrderRequest
         $itemsDto = [];
 
         foreach ($this->items as $item) {
-            $itemDto = new OrderItemDto(
+            $itemDto = new CreateOrderItemDto(
                 $item['product_id'],
                 $item['quantity'],
             );
@@ -30,7 +30,7 @@ class CreateOrderRequest
         }
 
         return new CreateOrderCommand(
-            new OrderDto($itemsDto)
+            new CreateOrderDto($itemsDto)
         );
     }
 }

@@ -8,23 +8,20 @@ use App\Entity\Order;
 
 class OrderCalculator
 {
-    public function calculateOrder(Order $order): CalculatedPriceDto
+    public function getOrderPrice(Order $order): OrderPriceValueObject
     {
         $subtotal = 0.0;
-        $vat = 0.0;
 
         foreach ($order->getItems() as $item) {
             $itemTotal = $item->getProduct()->getPrice() * $item->getQuantity();
             $subtotal += $itemTotal;
-            $vat += $itemTotal * 0.23;
         }
 
-        $total = round($subtotal + $vat, 2);
+        $total = round($subtotal, 2);
 
-        return new CalculatedPriceDto(
+        return new OrderPriceValueObject(
             $subtotal,
-            $total,
-            $vat
+            $total
         );
     }
 }

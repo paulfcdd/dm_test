@@ -6,8 +6,8 @@ namespace App\Command\Order\Create;
 
 use App\Command\CommandHandlerInterface;
 use App\Command\CommandInterface;
-use App\Dto\OrderDto;
-use App\Dto\OrderItemDto;
+use App\Dto\CreateOrderDto;
+use App\Dto\CreateOrderItemDto;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Repository\OrderRepository;
@@ -18,7 +18,7 @@ class CreateOrderHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly ProductRepository $productRepository,
-        private OrderRepository $orderRepository,
+        private readonly OrderRepository $orderRepository,
         private readonly OrderCalculator $calculator
     ) {
     }
@@ -42,7 +42,7 @@ class CreateOrderHandler implements CommandHandlerInterface
         }
 
         $order->setAmount(
-            $this->calculator->calculateOrder($order)->total
+            $this->calculator->getOrderPrice($order)->total
         );
         $this->orderRepository->save($order);
     }
